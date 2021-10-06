@@ -1,0 +1,31 @@
+{
+    "name": "leafs/logger",
+    "description": "Leaf PHP logger utility",
+    "keywords": [
+        "logger",
+        "leaf",
+        "php",
+        "framework"
+    ],
+    "homepage": "https://leafphp.netlify.app/#/",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Darko",
+            "email": "mickdd22@gmail.com",
+            "homepage": "https://mychi.netlify.app",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Leaf\\": "src"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "leafs/fs": "^1.0",
+        "leafs/date": "^1.0"
+    }
+}
