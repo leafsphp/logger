@@ -39,37 +39,6 @@ class Log
     const INFO      = 7;
     const DEBUG     = 8;
 
-
-    /**
-     * Install logger in leaf app
-     * 
-     * @param Leaf\App $app The leaf app insance (not needed in functional mode)
-     */
-    public function install($app = null)
-    {
-        if (!$app && function_exists("app")) {
-            $app = app();
-        }
-
-        // Default log writer
-        $app->register("logWriter", function ($c) use ($app) {
-            $logWriter = Config::get("log.writer");
-
-            $file = $app->config("log.dir") . $app->config("log.file");
-
-            return is_object($logWriter) ? $logWriter : new \Leaf\LogWriter($file, $app->config("log.open") ?? true);
-        });
-
-        // Default log
-        $app->register("log", function ($c) use ($app) {
-            $log = new \Leaf\Log($c["logWriter"]);
-            $log->enabled($app->config("log.enabled"));
-            $log->level($app->config("log.level"));
-
-            return $log;
-        });
-    }
-
     /**
      * @var array
      */
