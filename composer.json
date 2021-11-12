@@ -23,7 +23,8 @@
             "Leaf\\": "src"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+	"prefer-stable": true,
     "require": {
         "leafs/fs": "^1.0",
         "leafs/date": "^1.0"
