@@ -31,26 +31,26 @@ namespace Leaf;
 class Log
 {
     const EMERGENCY = 1;
-    const ALERT     = 2;
-    const CRITICAL  = 3;
-    const ERROR     = 4;
-    const WARN      = 5;
-    const NOTICE    = 6;
-    const INFO      = 7;
-    const DEBUG     = 8;
+    const ALERT = 2;
+    const CRITICAL = 3;
+    const ERROR = 4;
+    const WARN = 5;
+    const NOTICE = 6;
+    const INFO = 7;
+    const DEBUG = 8;
 
     /**
      * @var array
      */
     protected static $levels = [
         self::EMERGENCY => 'EMERGENCY',
-        self::ALERT     => 'ALERT',
-        self::CRITICAL  => 'CRITICAL',
-        self::ERROR     => 'ERROR',
-        self::WARN      => 'WARNING',
-        self::NOTICE    => 'NOTICE',
-        self::INFO      => 'INFO',
-        self::DEBUG     => 'DEBUG'
+        self::ALERT => 'ALERT',
+        self::CRITICAL => 'CRITICAL',
+        self::ERROR => 'ERROR',
+        self::WARN => 'WARNING',
+        self::NOTICE => 'NOTICE',
+        self::INFO => 'INFO',
+        self::DEBUG => 'DEBUG',
     ];
 
     /**
@@ -70,7 +70,7 @@ class Log
 
     /**
      * Constructor
-     * 
+     *
      * @param  mixed $writer
      */
     public function __construct($writer)
@@ -82,7 +82,7 @@ class Log
 
     /**
      * Enable or disable logging/return logging state
-     * 
+     *
      * @param bool|null $enabled Whether to enable or disable logging
      * @return bool|void
      */
@@ -97,7 +97,7 @@ class Log
 
     /**
      * Get/Set log level
-     * 
+     *
      * @param int|null $level The log level
      */
     public function level(?int $level = null)
@@ -115,7 +115,7 @@ class Log
 
     /**
      * Get/Set log level
-     * 
+     *
      * @param int|null $level The log level
      */
     public static function getLevel(int $level)
@@ -125,7 +125,7 @@ class Log
 
     /**
      * Get/Set log writer
-     * 
+     *
      * @param mixed $writer
      */
     public function writer($writer = null)
@@ -141,7 +141,7 @@ class Log
      * Is logging enabled?
      * @return bool
      */
-    public function isEnabled(): bool
+    public function isEnabled()
     {
         return $this->enabled;
     }
@@ -239,7 +239,7 @@ class Log
      * @param mixed $level
      * @param mixed $object
      * @param array $context
-     * 
+     *
      * @return mixed|bool What the Logger returns, or false if Logger not set or not enabled
      * @throws \InvalidArgumentException If invalid log level
      */
@@ -275,7 +275,7 @@ class Log
      * @param array $context   An array of placeholder values
      * @return string The processed string
      */
-    protected function interpolate($message, array $context = []): string
+    protected function interpolate($message, array $context = [])
     {
         $replace = [];
 
