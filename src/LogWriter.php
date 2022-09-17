@@ -36,22 +36,41 @@ class LogWriter
 
     /**
      * Write message
-     * 
+     *
      * @param mixed $message
-     * @param int|null $level
-     * @return int
+     * @param int $level
+     * @return int|bool
      */
-    public function write($message, int $level = null): int
+    public function write($message, $level = null)
     {
+        $style = class_exists('Leaf\Config') ? \Leaf\Config::get('log.style') ?? 'leaf' : 'leaf';
+
         if ($level !== null) {
             $level = Log::getLevel($level) . " - ";
         }
 
+        if ($style === 'leaf') {
+            $this->writeAsLeaf($message, $level);
+        } else if ($style === 'linux') {
+            $this->writeAsLinux($message, $level);
+        }
+
+        return 1;
+    }
+
+    protected function writeAsLeaf($message, $level)
+    {
         FS::prepend(
             $this->logFile,
             (string) "[" . Date::now() . "]\n" . $level . "$message\n"
         );
+    }
 
-        return 1;
+    protected function writeAsLinux($message, $level)
+    {
+        FS::append(
+            $this->logFile,
+            (string) "[" . Date::now() . "] " . $level . "$message\n"
+        );
     }
 }
