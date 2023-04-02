@@ -62,7 +62,7 @@ class LogWriter
     {
         FS::prepend(
             $this->logFile,
-            (string) "[" . tick()->now() . "]\n" . $level . "$message\n"
+            (string) "[" . (new \Leaf\Date())->tick()->now() . "]\n" . $level . "$message\n"
         );
     }
 
@@ -70,7 +70,7 @@ class LogWriter
     {
         FS::append(
             $this->logFile,
-            (string) "[" . tick()->now() . "] " . $level . "$message\n"
+            (string) "[" . (new \Leaf\Date())->tick()->now() . "] " . $level . "$message\n"
         );
     }
 }
