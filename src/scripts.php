@@ -2,17 +2,12 @@
 
 if (class_exists('Leaf\Config')) {
     \Leaf\Config::addScript(function ($app) {
-        $app->register('logWriter', function ($c) use ($app) {
-            $logWriter = $app->config('log.writer');
-            $file = $app->config('log.dir') . $app->config('log.file');
+        $app->register('logWriter', fn($c) => is_object($c['log.writer']) ? $c['log.writer'] : new \Leaf\LogWriter($c['log.dir'] . $c['log.file'], $c['log.open'] ?? true));
 
-            return is_object($logWriter) ? $logWriter : new \Leaf\LogWriter($file, $app->config('log.open') ?? true);
-        });
-
-        $app->register('log', function ($c) use ($app) {
-            $log = new \Leaf\Log($c->logWriter);
-            $log->enabled($app->config('log.enabled'));
-            $log->level($app->config('log.level'));
+        $app->register('log', function ($c) {
+            $log = new \Leaf\Log(\Leaf\Config::get("logWriter"));
+            $log->enabled($c['log.enabled']);
+            $log->level($c['log.level']);
 
             return $log;
         });
