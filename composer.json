@@ -29,7 +29,7 @@
     "minimum-stability": "dev",
 	"prefer-stable": true,
     "require": {
-        "leafs/fs": "^1.3",
+        "leafs/fs": "^2.0",
         "leafs/date": "*"
     }
 }
