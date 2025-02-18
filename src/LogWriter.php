@@ -25,9 +25,7 @@ class LogWriter
     {
         if (!file_exists($file)) {
             if ($createFile) {
-                FS\File::create($file, null, [
-                    'recursive' => true,
-                ]);
+                FS\File::create($file, null, ['recursive' => true]);
             } else {
                 trigger_error(basename($file) . " not found in " . dirname($file), E_USER_ERROR);
             }
