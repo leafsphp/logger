@@ -27,9 +27,14 @@
         ]
     },
     "minimum-stability": "dev",
-	"prefer-stable": true,
+    "prefer-stable": true,
     "require": {
         "leafs/fs": "*",
         "leafs/date": "*"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-v5.x": "5.0.x-dev"
+        }
     }
 }
