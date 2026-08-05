@@ -107,7 +107,9 @@ class Log
         }
 
         if (!isset(self::$levels[$level])) {
-            trigger_error("Invalid log level: " . self::$levels[$level]);
+            trigger_error("Invalid log level: $level");
+
+            return;
         }
 
         $this->level = $level;
@@ -247,6 +249,8 @@ class Log
     {
         if (!isset(self::$levels[$level])) {
             trigger_error('Invalid log level supplied to function');
+
+            return false;
         } else if ($this->enabled && $this->writer && $level <= $this->level) {
             if (is_array($object) || (is_object($object) && !method_exists($object, "__toString"))) {
                 $message = print_r($object, true);
@@ -255,12 +259,23 @@ class Log
             }
 
             if (count($context) > 0) {
-                if (isset($context['exception']) && $context['exception'] instanceof \Exception) {
+                if (isset($context['exception']) && $context['exception'] instanceof \Throwable) {
                     $message .= ' - ' . $context['exception'];
                     unset($context['exception']);
                 }
 
                 $message = $this->interpolate($message, $context);
+            }
+
+            if (function_exists('crash')) {
+                // mirror log lines into the crash journey so error reports
+                // show what the app was saying right before it broke
+                crash()->leaveCrumb(
+                    '[' . strtolower(self::$levels[$level] ?? 'log') . '] ' . $message,
+                    \Leaf\Crash\Breadcrumbs::TYPE_LOG,
+                    [],
+                    false
+                );
             }
 
             return $this->writer->write($message, $level);

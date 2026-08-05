@@ -49,10 +49,10 @@ class LogWriter
             $level = Log::getLevel($level) . " - ";
         }
 
-        if ($style === 'leaf') {
-            $this->writeAsLeaf($message, $level);
-        } else if ($style === 'linux') {
+        if ($style === 'linux') {
             $this->writeAsLinux($message, $level);
+        } else {
+            $this->writeAsLeaf($message, $level);
         }
 
         return 1;
