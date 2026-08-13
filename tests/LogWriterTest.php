@@ -22,17 +22,9 @@ it('creates a missing log file recursively when createFile is true', function ()
     expect(file_exists($this->file))->toBeTrue();
 });
 
-it('triggers a user error when the file is missing and createFile is false', function () {
-    set_error_handler(function ($errno, $errstr) {
-        throw new \RuntimeException($errstr, $errno);
-    });
-
-    try {
-        expect(fn () => new LogWriter($this->file, false))
-            ->toThrow(\RuntimeException::class, 'app.log not found');
-    } finally {
-        restore_error_handler();
-    }
+it('throws when the file is missing and createFile is false', function () {
+    expect(fn () => new LogWriter($this->file, false))
+        ->toThrow(\RuntimeException::class, 'app.log not found');
 });
 
 it('uses an existing file without complaint when createFile is false', function () {
@@ -45,7 +37,7 @@ it('uses an existing file without complaint when createFile is false', function 
     expect(file_get_contents($this->file))->toContain('hello');
 });
 
-it('writes leaf-style entries with the newest entry at the top', function () {
+it('appends entries in order by default', function () {
     $writer = new LogWriter($this->file, true);
 
     $writer->write('first entry', Log::ERROR);
@@ -53,7 +45,24 @@ it('writes leaf-style entries with the newest entry at the top', function () {
 
     $content = file_get_contents($this->file);
 
-    expect($content)->toMatch('/^\[[^\]]+\]\nINFO - second entry\n\n\[[^\]]+\]\nERROR - first entry\n\n$/');
+    // append uses the file pointer instead of rewriting the whole file,
+    // so production logs grow without rereading themselves on every line
+    expect($content)->toMatch('/^\[[^\]]+\]\nERROR - first entry\n\n\[[^\]]+\]\nINFO - second entry\n\n$/');
+    expect(strpos($content, 'first entry'))->toBeLessThan(strpos($content, 'second entry'));
+});
+
+it('prepends newest-first when log.mode is prepend', function () {
+    \Leaf\Config::set('log.mode', 'prepend');
+
+    $writer = new LogWriter($this->file, true);
+
+    $writer->write('first entry', Log::ERROR);
+    $writer->write('second entry', Log::INFO);
+
+    \Leaf\Config::set('log.mode', null);
+
+    $content = file_get_contents($this->file);
+
     expect(strpos($content, 'second entry'))->toBeLessThan(strpos($content, 'first entry'));
 });
 
