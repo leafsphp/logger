@@ -30,14 +30,14 @@ namespace Leaf;
  */
 class Log
 {
-    const EMERGENCY = 1;
-    const ALERT = 2;
-    const CRITICAL = 3;
-    const ERROR = 4;
-    const WARN = 5;
-    const NOTICE = 6;
-    const INFO = 7;
-    const DEBUG = 8;
+    public const EMERGENCY = 1;
+    public const ALERT = 2;
+    public const CRITICAL = 3;
+    public const ERROR = 4;
+    public const WARN = 5;
+    public const NOTICE = 6;
+    public const INFO = 7;
+    public const DEBUG = 8;
 
     /**
      * @var array
@@ -251,8 +251,8 @@ class Log
             trigger_error('Invalid log level supplied to function');
 
             return false;
-        } else if ($this->enabled && $this->writer && $level <= $this->level) {
-            if (is_array($object) || (is_object($object) && !method_exists($object, "__toString"))) {
+        } elseif ($this->enabled && $this->writer && $level <= $this->level) {
+            if (is_array($object) || (is_object($object) && !method_exists($object, '__toString'))) {
                 $message = print_r($object, true);
             } else {
                 $message = (string) $object;

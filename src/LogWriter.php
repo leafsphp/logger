@@ -27,7 +27,7 @@ class LogWriter
             if ($createFile) {
                 FS\File::create($file, null, ['recursive' => true]);
             } else {
-                trigger_error(basename($file) . " not found in " . dirname($file), E_USER_ERROR);
+                trigger_error(basename($file) . ' not found in ' . dirname($file), E_USER_ERROR);
             }
         }
 
@@ -46,7 +46,7 @@ class LogWriter
         $style = class_exists('Leaf\Config') ? \Leaf\Config::get('log.style') ?? 'leaf' : 'leaf';
 
         if ($level !== null) {
-            $level = Log::getLevel($level) . " - ";
+            $level = Log::getLevel($level) . ' - ';
         }
 
         if ($style === 'linux') {
@@ -63,7 +63,7 @@ class LogWriter
         FS\File::write(
             $this->logFile,
             function ($content) use ($message, $level) {
-                return "[" . (new \Leaf\Date())->tick()->now() . "]\n" . $level . "$message\n\n" . $content;
+                return '[' . (new \Leaf\Date())->tick()->now() . "]\n" . $level . "$message\n\n" . $content;
             },
         );
     }
@@ -73,7 +73,7 @@ class LogWriter
         FS\File::write(
             $this->logFile,
             function ($content) use ($message, $level) {
-                return "[" . (new \Leaf\Date())->tick()->now() . "] " . $level . "$message\n\n" . $content;
+                return '[' . (new \Leaf\Date())->tick()->now() . '] ' . $level . "$message\n\n" . $content;
             },
         );
     }

@@ -30,12 +30,13 @@
     "prefer-stable": true,
     "require": {
         "php": "^8.2",
-        "leafs/fs": "*",
-        "leafs/date": "*"
+        "leafs/fs": "^5.0",
+        "leafs/date": "^5.0"
     },
     "require-dev": {
         "pestphp/pest": "*",
-        "leafs/alchemy": "v5.x-dev"
+        "leafs/alchemy": "^5.0",
+        "friendsofphp/php-cs-fixer": "^3.95"
     },
     "config": {
         "allow-plugins": {
