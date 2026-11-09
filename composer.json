@@ -30,7 +30,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^8.2",
-        "leafs/fs": "^5.0",
+        "leafs/fs": "^4.0 || ^5.0",
         "leafs/date": "^5.0"
     },
     "require-dev": {
